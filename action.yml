@@ -11,7 +11,7 @@ inputs:
     description: the Slack channel ID where the posts go
     required: true
 runs:
-  using: "composite"
+  using: "node12"
   steps:
     - name: store activity
       run: export GH_EVENT_ACTIVITY="${{ github.event.action }}"
