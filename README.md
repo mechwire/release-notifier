@@ -16,18 +16,23 @@ This repository was partially inspired by [the advocate of frequent releases][Pa
 
 
 ```yaml
+name: Release Notifier
+
 on:
   release:
     types: [published, created, edited, deleted, prereleased, released]
 
 jobs:
-  release-notify-slack:    
+  release-notify-slack:
     name: Send notification to Slack about release
-    uses: jncmaguire/release-notifier@main
-    with:
-        GITHUB_API_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
-        SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
-        SLACK_CHANNEL: "my-release-channel"
+    runs-on: ubuntu-20.04
+    steps:
+     -  uses: jncmaguire/release-notifier@main
+        run: notifier
+        with:
+          GITHUB_API_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
+          SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
+          SLACK_CHANNEL: "my-release-channel"
 ```
 
 
