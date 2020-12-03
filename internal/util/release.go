@@ -55,7 +55,7 @@ func NewReleaseFromString(s string) (Release, error) {
 
 	matches := pattern.FindAllStringSubmatch(s, -1)
 	for i, name := range pattern.SubexpNames() {
-		if i != 0 && name != "" {
+		if i != 0 && name != "" && len(matches) > 0 {
 			v, err := strconv.Atoi(matches[i][0])
 			if err != nil {
 				return Release{}, err
