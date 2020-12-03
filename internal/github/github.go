@@ -38,7 +38,7 @@ func (c *Client) GetPreviousNonPatchRelease(repository string, next util.Release
 		switch ut := releases[i].UpgradeType(next); ut {
 		case util.Major, util.Minor:
 			if previousMajorOrMinor.Less(releases[i]) {
-				previousPatch = releases[i]
+				previousMajorOrMinor = releases[i]
 			}
 		case util.Patch:
 			if previousPatch.Less(releases[i]) {
