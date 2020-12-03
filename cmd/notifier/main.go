@@ -98,6 +98,6 @@ func main() {
 	err = slackClient.SendReleaseNotification(a.gitHubAction.ServerURL, a.gitHubAction.Repository, prev, next, comment)
 
 	if err != nil {
-		log.Fatalf("issue with slack: issue sending notification %v", err)
+		log.Fatalf("issue with slack: issue sending notification: %v", err)
 	}
 }
