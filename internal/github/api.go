@@ -9,6 +9,10 @@ import (
 	"github.com/jncmaguire/release-notifier/internal/util"
 )
 
+type ingester struct {
+	TagName string `json:"tag_name"`
+}
+
 func (c *Client) request(method string, path string, pathArgs map[string]interface{}, body interface{}) ([]byte, error) {
 	request, err := util.BuildRequest(method, c.APIURL, path, pathArgs, body)
 	if err != nil {
@@ -39,9 +43,7 @@ func (c *Client) getReleases(owner string, repo string, perPage int, page int) (
 		return []util.Release{}, err
 	}
 
-	objects := make([]struct {
-		TagName string `json:"tag_name"`
-	}, perPage)
+	objects := make([]ingester, perPage)
 
 	if err = json.Unmarshal(data, &objects); err != nil {
 		return []util.Release{}, err

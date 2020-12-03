@@ -16,6 +16,13 @@ type message struct {
 	TS   float64
 }
 
+type ingester struct {
+	Error          string
+	Ok             bool
+	Messages       []message
+	CreatedMessage message `json:"message"`
+}
+
 func (c *Client) request(method string, baseURL string, path string, pathArgs map[string]interface{}, body interface{}) ([]byte, error) {
 	request, err := util.BuildRequest(http.MethodGet, c.APIURL, path, pathArgs, body)
 
@@ -35,10 +42,7 @@ func (c *Client) request(method string, baseURL string, path string, pathArgs ma
 	defer response.Body.Close()
 	data, err := ioutil.ReadAll(response.Body)
 
-	object := struct {
-		Error string
-		Ok    bool
-	}{}
+	object := ingester{}
 
 	if err = json.Unmarshal(data, &object); err != nil {
 		return nil, err
@@ -61,9 +65,7 @@ func (c *Client) conversationsHistory(options map[string]interface{}) ([]message
 		return nil, err
 	}
 
-	object := struct {
-		Messages []message
-	}{}
+	object := ingester{}
 
 	if err = json.Unmarshal(data, &object); err != nil {
 		return nil, err
@@ -83,9 +85,7 @@ func (c *Client) chatPostMessage(text string, options map[string]interface{}) (m
 		return message{}, err
 	}
 
-	object := struct {
-		CreatedMessage message `json:"message"`
-	}{}
+	object := ingester{}
 
 	if err = json.Unmarshal(data, &object); err != nil {
 		return message{}, err
