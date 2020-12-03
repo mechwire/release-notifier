@@ -46,6 +46,8 @@ func (c *Client) GetPreviousNonPatchRelease(repository string, next util.Release
 				previousPatch = releases[i]
 			}
 		}
+
+		log.Println(i, releases[i], previousMajorOrMinor, previousPatch)
 	}
 
 	log.Println(releases, previousMajorOrMinor, previousPatch, previousPatch.Less(previousMajorOrMinor), "patch < major")
