@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -32,7 +31,7 @@ func (a args) validate() (err error) {
 		a.slack.ChannelID,
 	} {
 		if val == "" {
-			err = errors.New("Value should not be empty")
+			err = fmt.Errorf("value should not be empty: %+v", a)
 		}
 	}
 
@@ -65,7 +64,7 @@ func main() {
 	a := getEnvArgs()
 
 	if err := a.validate(); err != nil {
-		log.Fatalf("issue processing arguments %v", err)
+		log.Fatalf("issue processing arguments: %v", err)
 	}
 
 	// lazy cleanup githubRef
