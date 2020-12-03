@@ -2,9 +2,7 @@
 
 This project is a GitHub action that sends a message to the given Slack channel if one of the release events it listens for is triggered.
 
-This repository is named after [the advocate of frequent releases][Patti LaBelle].\*
-
-\* But not affiliated. Please don't sue me.
+This repository was partially inspired by [the advocate of frequent releases][Patti LaBelle].
 
 ## Getting Started
 
