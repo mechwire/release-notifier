@@ -51,8 +51,7 @@ func (c *Client) getReleases(owner string, repo string, perPage int, page int) (
 
 	releases := make([]util.Release, 0, perPage)
 
-	i := 0
-	for i < perPage {
+	for i := range objects {
 		release, err := util.NewReleaseFromString(objects[i].TagName)
 
 		if err == nil {
