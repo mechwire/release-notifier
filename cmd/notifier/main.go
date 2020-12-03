@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/jncmaguire/release-notifier/internal/github"
 	"github.com/jncmaguire/release-notifier/internal/slack"
@@ -70,7 +71,8 @@ func main() {
 	fmt.Printf("%+v", a)
 
 	// lazy cleanup githubRef
-	strippedRef := a.gitHubAction.Ref[len(`refs/heads/`):]
+
+	strippedRef := strings.Join(strings.Split(a.gitHubAction.Ref, `/`)[2:], `/`)
 
 	next, err := util.NewReleaseFromString(strippedRef)
 	if err != nil {
