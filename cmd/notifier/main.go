@@ -79,6 +79,8 @@ func main() {
 		log.Fatalf("issue processing release: %v", err)
 	}
 
+	log.Printf(`processing current release %v\n`, next)
+
 	gitHubClient := a.gitHub
 
 	// this should generally work as expected, unless your last major or minor update more 20 releases ago (including the triggered release). Otherwise, it will return the second-most-recent patch release instead.
@@ -87,6 +89,8 @@ func main() {
 		// exit
 		log.Fatalf("issue with github: issue fetching previous release: %v", err)
 	}
+
+	log.Printf(`previous release identified as %v\n`, prev)
 
 	slackClient := a.slack
 	comment := fmt.Sprintf("*<%[1]s/releases/tag/%[2]v|%[2]v>* - <%[1]s/%[3]s|%[3]s> performed activity %[4]q", a.gitHubAction.ServerURL, next, a.gitHubAction.Actor, a.gitHubAction.Activity)
