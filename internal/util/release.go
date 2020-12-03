@@ -55,7 +55,11 @@ func NewReleaseFromString(s string) (Release, error) {
 
 	matches := pattern.FindAllStringSubmatch(s, -1)
 
-	fmt.Println(pattern, s, matches)
+	fmt.Println(s, matches, len(matches))
+
+	if len(matches) > 0 {
+		fmt.Println("\t", len(matches[0]))
+	}
 
 	for i, name := range pattern.SubexpNames() {
 		if i != 0 && name != "" {
