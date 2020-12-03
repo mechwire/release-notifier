@@ -46,7 +46,7 @@ func (c *Client) getReleases(owner string, repo string, perPage int, page int) (
 	objects := make([]ingester, perPage)
 
 	if err = json.Unmarshal(data, &objects); err != nil {
-		return []util.Release{}, fmt.Errorf("%w: %v", err, string(data))
+		return []util.Release{}, fmt.Errorf("%v/%v %w: %v", owner, repo, err, string(data))
 	}
 
 	releases := make([]util.Release, 0, perPage)
