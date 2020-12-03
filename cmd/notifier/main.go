@@ -26,6 +26,7 @@ func (a args) validate() (err error) {
 		a.gitHubAction.ServerURL,
 		a.gitHub.APIURL,
 		a.gitHubAction.Activity,
+		a.gitHub.APIToken,
 		a.slack.APIURL,
 		a.slack.APIToken,
 		a.slack.Channel,
@@ -49,7 +50,8 @@ func getEnvArgs() args {
 			ServerURL:  os.Getenv(`GITHUB_SERVER_URL`),
 		},
 		gitHub: github.Client{
-			APIURL: os.Getenv(`GITHUB_API_URL`),
+			APIURL:   os.Getenv(`GITHUB_API_URL`),
+			APIToken: os.Getenv(`GITHUB_API_TOKEN`),
 		},
 		slack: slack.Client{
 			APIURL:   `https://slack.com/api/`,     // hardcoded

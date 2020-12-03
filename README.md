@@ -17,7 +17,8 @@ jobs:
     name: Send notification to Slack about release
     uses: jncmaguire/release-notifier@master
     with:
-        SLACK_API_TOKEN: "my-api-token"
+        GITHUB_API_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
+        SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
         SLACK_CHANNEL: "my-release-channel"
 ```
 

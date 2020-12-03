@@ -15,6 +15,7 @@ func (c *Client) request(method string, path string, pathArgs map[string]interfa
 		return nil, err
 	}
 
+	request.Header.Add("Authorization", fmt.Sprintf("Bearer: %s", c.APIToken))
 	request.Header.Add("Content-Type", "application/json")
 	request.Header.Add(`Accept`, `application/vnd.github.v3+json`)
 

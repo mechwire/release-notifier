@@ -1,8 +1,11 @@
 name: Release Notifier
 description: "Notify Slack about your releases without spamming the channel"
 inputs:
+  gitHubApiToken:
+    description: the token for GitHub API calls for releases
+    required: true
   slackApiToken:
-    description: the token for Slack API calls
+    description: the token for Slack API calls for message search and posting
     required: true
   slackChannel:
     description: the Slack channel where the posts go

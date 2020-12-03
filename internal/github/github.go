@@ -16,7 +16,8 @@ type Action struct {
 }
 
 type Client struct {
-	APIURL string
+	APIURL   string
+	APIToken string
 }
 
 func (c *Client) GetPreviousNonPatchRelease(repository string, next util.Release) (release util.Release, err error) {
