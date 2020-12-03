@@ -58,8 +58,8 @@ func NewReleaseFromString(s string) (Release, error) {
 	fmt.Println(pattern, s, matches)
 
 	for i, name := range pattern.SubexpNames() {
-		if i != 0 && name != "" && len(matches) > 0 {
-			v, err := strconv.Atoi(matches[i][0])
+		if i != 0 && name != "" {
+			v, err := strconv.Atoi(matches[0][i])
 			if err != nil {
 				return Release{}, err
 			}
