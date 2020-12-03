@@ -44,7 +44,6 @@ func (c *Client) GetPreviousNonPatchRelease(repository string, next util.Release
 			if previousPatch.Less(releases[i]) {
 				previousPatch = releases[i]
 			}
-
 		}
 	}
 
