@@ -1,6 +1,7 @@
 package github
 
 import (
+	"log"
 	"strings"
 
 	"github.com/jncmaguire/release-notifier/internal/util"
@@ -46,6 +47,8 @@ func (c *Client) GetPreviousNonPatchRelease(repository string, next util.Release
 			}
 		}
 	}
+
+	log.Println(releases, previousMajorOrMinor, previousPatch)
 
 	if (previousMajorOrMinor != util.Release{}) {
 		release = previousMajorOrMinor
