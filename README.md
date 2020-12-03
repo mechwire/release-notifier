@@ -2,6 +2,14 @@
 
 This project is a GitHub action that sends a message to the given Slack channel if one of the release events it listens for is triggered.
 
+The top level messages should look like:
+
+> [your-org/your-project](#) release! 🎉 [v1.2.3](https://github.com/your-org/your-project/releases/tag/v1.2.3) ➡️ **1.3.x**
+
+The replies should look like:
+
+> **v1.3.0** - **your-github-user-name** performed activity 'created'"
+
 This repository was partially inspired by [the advocate of frequent releases][Patti LaBelle].
 
 ## Getting Started
@@ -15,7 +23,7 @@ on:
 jobs:
   release-notify-slack:    
     name: Send notification to Slack about release
-    uses: jncmaguire/release-notifier@master
+    uses: jncmaguire/release-notifier@main
     with:
         GITHUB_API_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
         SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}

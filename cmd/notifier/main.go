@@ -86,7 +86,7 @@ func main() {
 	}
 
 	slackClient := a.slack
-	comment := fmt.Sprintf("%v - %s performed activity %q", next, a.gitHubAction.Actor, a.gitHubAction.Activity)
+	comment := fmt.Sprintf("*%v* - *%s* performed activity %q", next, a.gitHubAction.Actor, a.gitHubAction.Activity)
 
 	err = slackClient.SendReleaseNotification(a.gitHubAction.ServerURL, a.gitHubAction.Repository, prev, next, comment)
 
