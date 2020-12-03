@@ -11,8 +11,9 @@ import (
 )
 
 type message struct {
-	Username string
-	TS       float64
+	User string
+	Text string
+	TS   float64
 }
 
 func (c *Client) request(method string, baseURL string, path string, pathArgs map[string]interface{}, body interface{}) ([]byte, error) {
@@ -50,32 +51,31 @@ func (c *Client) request(method string, baseURL string, path string, pathArgs ma
 	return data, nil
 }
 
-func (c *Client) searchMessages(query string, options map[string]interface{}) ([]message, error) {
+func (c *Client) conversationsHistory(options map[string]interface{}) ([]message, error) {
 
-	data, err := c.request(http.MethodGet, c.APIURL, "/search.messages", map[string]interface{}{
-		`query`: query,
+	data, err := c.request(http.MethodGet, c.APIURL, "/conversations.history", map[string]interface{}{
+		`channel`: c.ChannelID,
 	}, nil)
+
 	if err != nil {
-		return []message{}, err
+		return nil, err
 	}
 
 	object := struct {
-		Messages struct {
-			Matches []message
-		}
+		Messages []message
 	}{}
 
 	if err = json.Unmarshal(data, &object); err != nil {
 		return nil, err
 	}
 
-	return object.Messages.Matches, nil
+	return object.Messages, nil
 }
 
 func (c *Client) chatPostMessage(text string, options map[string]interface{}) (message, error) {
 
 	data, err := c.request(http.MethodPost, c.APIURL, "/chat.postMessage", map[string]interface{}{
-		`channel`: c.Channel,
+		`channel`: c.ChannelID,
 		`text`:    text,
 	}, nil)
 

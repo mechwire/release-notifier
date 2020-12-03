@@ -32,7 +32,7 @@ jobs:
         with:
           GITHUB_API_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
           SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
-          SLACK_CHANNEL: "my-release-channel"
+          SLACK_CHANNEL_ID: "C1234567890"
 ```
 
 

@@ -7,26 +7,26 @@ import (
 )
 
 type Client struct {
-	APIURL   string
-	APIToken string
-	Channel  string
+	APIURL    string
+	APIToken  string
+	ChannelID string
 }
 
 func (c *Client) getNewestSignificantRelease(text string) (message, error) {
 
-	messages, err := c.searchMessages(fmt.Sprintf("from:@me in:#%s %q", c.Channel, text), map[string]interface{}{
-		`count`: 5,
-	})
+	messages, err := c.conversationsHistory(nil) // we don't want to exhaust the API; if it's not in the first 100 results, w/e
 
 	if err != nil {
 		return message{}, err
 	}
 
-	if len(messages) == 0 {
-		return message{}, nil
+	for i := range messages {
+		if messages[i].Text == text { // edgecase: someone else posts the exact same message
+			return messages[i], nil
+		}
 	}
 
-	return messages[0], nil // this is probably sufficient?
+	return message{}, nil
 }
 
 func (c *Client) postSignificantRelease(text string) (message, error) {

@@ -7,8 +7,8 @@ inputs:
   slackApiToken:
     description: the token for Slack API calls for message search and posting
     required: true
-  slackChannel:
-    description: the Slack channel where the posts go
+  slackChannelId:
+    description: the Slack channel ID where the posts go
     required: true
 runs:
   using: "composite"
