@@ -2,7 +2,7 @@ package slack
 
 import (
 	"fmt"
-	"time"
+	"log"
 
 	"github.com/jncmaguire/release-notifier/internal/util"
 )
@@ -45,10 +45,7 @@ func (c *Client) getCurrentParentReleaseNotification(repositoryServerURL string,
 	}
 
 	if (msg == message{}) {
-
-		if prev.UpgradeType(next) == util.Major {
-
-		}
+		log.Println("make top-level post")
 		msg, err = c.postSignificantRelease(text)
 	}
 
@@ -59,11 +56,11 @@ func (c *Client) SendReleaseNotification(repositoryServerURL string, repository 
 
 	currentParent, err := c.getCurrentParentReleaseNotification(repositoryServerURL, repository, prev, next)
 
+	log.Println("using parent TS", currentParent.TS)
+
 	if err != nil {
 		return err
 	}
-
-	time.Sleep(1 * time.Millisecond)
 
 	_, err = c.chatPostMessage(text, map[string]interface{}{
 		"thread_ts":    currentParent.TS,
