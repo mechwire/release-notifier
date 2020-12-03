@@ -11,14 +11,8 @@ inputs:
     description: the Slack channel ID where the posts go
     required: true
 runs:
-  using: "node12"
+  using: "composite"
   steps:
     - name: store activity
       run: export GH_EVENT_ACTIVITY="${{ github.event.action }}"
       shell: sh
-    - uses: actions/checkout@v2
-    - uses: actions/setup-go@v2
-      with:
-        go-version: '1.15.0'
-    - name: run code
-      run: go run ./cmd/notifier
