@@ -35,6 +35,12 @@ jobs:
           SLACK_CHANNEL_ID: "C1234567890"
 ```
 
+## Limitations
+
+* Releases are only recognized if they follow the exact format `v<Major>.<Minor>.<Patch>`
+* To avoid excessive queries, if the previous major or minor release in GitHub is more than 19 entries behind the triggering release, the most recent preceding release will be selected. (e.g., if you make release `v1.1.20`, it thinks the preceding release is `v1.1.19` instead of `v1.0.9`, because we never fetched the `v1.0.9` release.)
+* Due to Slack API permissions for bots, if a message cannot be found in the last 100 messages of a channel, a new top-level message will be created.
+* Due to my laziness, if someone posts a message that looks identical to what the bot would want to post, it will respond to the message as if it was the post.
 
 <!-- References -->
 [Slack Webhooks]: https://api.slack.com/messaging/webhooks
