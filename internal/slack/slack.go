@@ -3,7 +3,7 @@ package slack
 import (
 	"fmt"
 
-	"github.com/jncmaguire/labelle-release-notifier/internal/util"
+	"github.com/jncmaguire/release-notifier/internal/util"
 )
 
 type Client struct {

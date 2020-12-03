@@ -3,7 +3,7 @@ package github
 import (
 	"strings"
 
-	"github.com/jncmaguire/labelle-release-notifier/internal/util"
+	"github.com/jncmaguire/release-notifier/internal/util"
 )
 
 type Action struct {

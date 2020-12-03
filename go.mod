@@ -1,3 +1,3 @@
-module github.com/jncmaguire/labelle-release-notifier
+module github.com/jncmaguire/release-notifier
 
 go 1.15

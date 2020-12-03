@@ -6,9 +6,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/jncmaguire/labelle-release-notifier/internal/github"
-	"github.com/jncmaguire/labelle-release-notifier/internal/slack"
-	"github.com/jncmaguire/labelle-release-notifier/internal/util"
+	"github.com/jncmaguire/release-notifier/internal/github"
+	"github.com/jncmaguire/release-notifier/internal/slack"
+	"github.com/jncmaguire/release-notifier/internal/util"
 )
 
 type args struct {

@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/jncmaguire/labelle-release-notifier/internal/util"
+	"github.com/jncmaguire/release-notifier/internal/util"
 )
 
 type message struct {

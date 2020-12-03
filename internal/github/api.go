@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/jncmaguire/labelle-release-notifier/internal/util"
+	"github.com/jncmaguire/release-notifier/internal/util"
 )
 
 func (c *Client) request(method string, path string, pathArgs map[string]interface{}, body interface{}) ([]byte, error) {
