@@ -28,9 +28,7 @@ func (a args) validate() (err error) {
 		a.gitHubAction.Activity,
 		a.slack.APIURL,
 		a.slack.APIToken,
-		a.slack.Webhook,
 		a.slack.Channel,
-		a.slack.Username,
 	} {
 		if val == "" {
 			err = errors.New("Value should not be empty")
@@ -54,11 +52,9 @@ func getEnvArgs() args {
 			APIURL: os.Getenv(`GITHUB_API_URL`),
 		},
 		slack: slack.Client{
-			APIURL:   os.Getenv(`SLACK_API_URL`),   // set by user
+			APIURL:   `https://slack.com/api/`,     // hardcoded
 			APIToken: os.Getenv(`SLACK_API_TOKEN`), // set by user
-			Webhook:  os.Getenv(`SLACK_WEBHOOK`),   // set by user
 			Channel:  os.Getenv(`SLACK_CHANNEL`),   // set by user
-			Username: os.Getenv(`SLACK_USERNAME`),  // set by user
 		},
 	}
 }

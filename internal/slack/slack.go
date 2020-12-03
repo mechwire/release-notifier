@@ -9,8 +9,6 @@ import (
 type Client struct {
 	APIURL   string
 	APIToken string
-	Webhook  string
-	Username string
 	Channel  string
 }
 
@@ -46,6 +44,10 @@ func (c *Client) getCurrentParentReleaseNotification(repositoryServerURL string,
 	}
 
 	if (msg == message{}) {
+
+		if prev.UpgradeType(next) == util.Major {
+
+		}
 		msg, err = c.postSignificantRelease(text)
 	}
 

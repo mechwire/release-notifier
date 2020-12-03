@@ -17,23 +17,15 @@ on:
 jobs:
   release-notify-slack:    
     name: Send notification to Slack about release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-go@v2
-          with:
-            go-version: '1.15.0'
-       - run: go run cmd/notifier
-         env:
-           GITHUB_EVENT_ACTIVITY="${{ github.event.action }}"
-           SLACK_API_URL: ""
-           SLACK_API_TOKEN: ""
-           SLACK_WEBHOOK: ""
-           SLACK_CHANNEL: "my-release-channel"
-           SLACK_USERNAME: "my-bot-name"
+    uses: jncmaguire/release-notifier@master
+    with:
+        SLACK_API_TOKEN: "my-api-token"
+        SLACK_CHANNEL: "my-release-channel"
 ```
 
 
 <!-- References -->
+[Slack Webhooks]: https://api.slack.com/messaging/webhooks
 [Variables]: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/essential-features-of-github-actions#using-variables-in-your-workflows
 [Environment Variables]: https://docs.github.com/en/free-pro-team@latest/actions/reference/environment-variables#default-environment-variables
 [Events]: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows#release

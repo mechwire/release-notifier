@@ -74,7 +74,7 @@ func (c *Client) searchMessages(query string, options map[string]interface{}) ([
 
 func (c *Client) chatPostMessage(text string, options map[string]interface{}) (message, error) {
 
-	data, err := c.request(http.MethodPost, c.Webhook, "", map[string]interface{}{
+	data, err := c.request(http.MethodPost, c.APIURL, "/chat.postMessage", map[string]interface{}{
 		`channel`: c.Channel,
 		`text`:    text,
 	}, nil)
