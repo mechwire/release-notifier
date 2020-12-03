@@ -13,7 +13,7 @@ import (
 type message struct {
 	User string
 	Text string
-	TS   float64
+	TS   string
 }
 
 type ingester struct {
