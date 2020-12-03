@@ -14,7 +14,8 @@ runs:
   using: "composite"
   steps:
     - name: store activity
-      run: export GITHUB_EVENT_ACTIVITY="${{ github.event.action }}"
+      run: export GH_EVENT_ACTIVITY="${{ github.event.action }}"
+      shell: sh
     - uses: actions/checkout@v2
     - uses: actions/setup-go@v2
       with:

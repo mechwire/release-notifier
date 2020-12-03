@@ -46,12 +46,12 @@ func getEnvArgs() args {
 			Repository: os.Getenv(`GITHUB_REPOSITORY`),
 			Ref:        os.Getenv(`GITHUB_REF`),
 			Event:      os.Getenv(`GITHUB_EVENT`),
-			Activity:   os.Getenv(`GITHUB_EVENT_ACTIVITY`), // set by user
+			Activity:   os.Getenv(`GH_EVENT_ACTIVITY`), // set by user
 			ServerURL:  os.Getenv(`GITHUB_SERVER_URL`),
 		},
 		gitHub: github.Client{
 			APIURL:   os.Getenv(`GITHUB_API_URL`),
-			APIToken: os.Getenv(`GITHUB_API_TOKEN`),
+			APIToken: os.Getenv(`GH_API_TOKEN`),
 		},
 		slack: slack.Client{
 			APIURL:    `https://slack.com/api/`,      // hardcoded
