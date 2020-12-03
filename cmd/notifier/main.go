@@ -44,7 +44,7 @@ func getEnvArgs() args {
 			Actor:      os.Getenv(`GITHUB_ACTOR`),
 			Repository: os.Getenv(`GITHUB_REPOSITORY`),
 			Ref:        os.Getenv(`GITHUB_REF`),
-			Event:      os.Getenv(`GITHUB_EVENT`),
+			Event:      os.Getenv(`GITHUB_EVENT_NAME`),
 			Activity:   os.Getenv(`GH_EVENT_ACTIVITY`), // set by user
 			ServerURL:  os.Getenv(`GITHUB_SERVER_URL`),
 		},
