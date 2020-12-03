@@ -15,10 +15,6 @@ type Action struct {
 	Activity   string
 }
 
-type Config struct {
-	APIURL string
-}
-
 type Client struct {
 	APIURL string
 }

@@ -12,23 +12,25 @@ import (
 )
 
 type args struct {
-	GitHubAction github.Action
-	GitHubConfig github.Config
-	SlackConfig  slack.Config
+	gitHubAction github.Action
+	gitHub       github.Client
+	slack        slack.Client
 }
 
 func (a args) validate() (err error) {
 	for _, val := range []string{
-		a.GitHubAction.Actor,
-		a.GitHubAction.Repository,
-		a.GitHubAction.Ref,
-		a.GitHubAction.Event,
-		a.GitHubAction.ServerURL,
-		a.GitHubConfig.APIURL,
-		a.GitHubAction.Activity,
-		a.SlackConfig.Webhook,
-		a.SlackConfig.ChannelID,
-		a.SlackConfig.Username,
+		a.gitHubAction.Actor,
+		a.gitHubAction.Repository,
+		a.gitHubAction.Ref,
+		a.gitHubAction.Event,
+		a.gitHubAction.ServerURL,
+		a.gitHub.APIURL,
+		a.gitHubAction.Activity,
+		a.slack.APIURL,
+		a.slack.APIToken,
+		a.slack.Webhook,
+		a.slack.Channel,
+		a.slack.Username,
 	} {
 		if val == "" {
 			err = errors.New("Value should not be empty")
@@ -40,7 +42,7 @@ func (a args) validate() (err error) {
 
 func getEnvArgs() args {
 	return args{
-		GitHubAction: github.Action{
+		gitHubAction: github.Action{
 			Actor:      os.Getenv(`GITHUB_ACTOR`),
 			Repository: os.Getenv(`GITHUB_REPOSITORY`),
 			Ref:        os.Getenv(`GITHUB_REF`),
@@ -48,13 +50,15 @@ func getEnvArgs() args {
 			Activity:   os.Getenv(`GITHUB_EVENT_ACTIVITY`), // set by user
 			ServerURL:  os.Getenv(`GITHUB_SERVER_URL`),
 		},
-		GitHubConfig: github.Config{
+		gitHub: github.Client{
 			APIURL: os.Getenv(`GITHUB_API_URL`),
 		},
-		SlackConfig: slack.Config{
-			Webhook:   os.Getenv(`SLACK_WEBHOOK`),    // set by user
-			ChannelID: os.Getenv(`SLACK_CHANNEL_ID`), // set by user
-			Username:  os.Getenv(`SLACK_USERNAME`),   // set by user
+		slack: slack.Client{
+			APIURL:   os.Getenv(`SLACK_API_URL`),   // set by user
+			APIToken: os.Getenv(`SLACK_API_TOKEN`), // set by user
+			Webhook:  os.Getenv(`SLACK_WEBHOOK`),   // set by user
+			Channel:  os.Getenv(`SLACK_CHANNEL`),   // set by user
+			Username: os.Getenv(`SLACK_USERNAME`),  // set by user
 		},
 	}
 }
@@ -67,25 +71,26 @@ func main() {
 	}
 
 	// lazy cleanup githubRef
-	strippedRef := a.GitHubAction.Ref[len(`refs/heads/`):]
+	strippedRef := a.gitHubAction.Ref[len(`refs/heads/`):]
 
 	next, err := util.NewReleaseFromString(strippedRef)
 	if err != nil {
 		log.Fatalf("issue processing release: %v", err)
 	}
 
-	gh := github.Client{}
-	prev, err := gh.GetPreviousRelease(a.GitHubAction.Repository, next)
+	gitHubClient := a.gitHub
+
+	prev, err := gitHubClient.GetPreviousRelease(a.gitHubAction.Repository, next)
 	if err != nil {
 		// exit
 		log.Fatalf("issue with github: issue fetching previous release: %v", err)
 	}
 
-	comment := fmt.Sprintf("%v - %s performed activity %q", next, a.GitHubAction.Actor, a.GitHubAction.Activity)
+	slackClient := a.slack
 
-	s := slack.Client{}
+	comment := fmt.Sprintf("%v - %s performed activity %q", next, a.gitHubAction.Actor, a.gitHubAction.Activity)
 
-	err = s.SendReleaseNotification(a.GitHubAction.ServerURL, a.GitHubAction.Repository, prev, next, comment)
+	err = slackClient.SendReleaseNotification(a.gitHubAction.ServerURL, a.gitHubAction.Repository, prev, next, comment)
 
 	if err != nil {
 		log.Fatalf("issue with slack: issue sending notification %v", err)
