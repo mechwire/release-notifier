@@ -19,6 +19,7 @@ type message struct {
 type ingester struct {
 	Error          string
 	Ok             bool
+	Channel        string
 	Messages       []message
 	CreatedMessage message `json:"message"`
 }
@@ -90,6 +91,8 @@ func (c *Client) chatPostMessage(text string, options map[string]interface{}) (m
 	if err = json.Unmarshal(data, &object); err != nil {
 		return message{}, err
 	}
+
+	fmt.Printf("message: %+v\n", object)
 
 	return object.CreatedMessage, nil
 }
