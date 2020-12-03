@@ -19,22 +19,38 @@ type Client struct {
 	APIURL string
 }
 
-func (c *Client) GetPreviousRelease(repository string, next util.Release) (release util.Release, err error) {
+func (c *Client) GetPreviousNonPatchRelease(repository string, next util.Release) (release util.Release, err error) {
 
 	reps := strings.Split(repository, "/")
 	owner := reps[0]
 	project := reps[1]
 
-	releases, err := c.getReleases(owner, project, 5, 1)
+	releases, err := c.getReleases(owner, project, 20, 1)
 
 	if err != nil {
 		return release, err
 	}
 
+	previousMajorOrMinor := util.Release{}
+	previousPatch := util.Release{}
 	for i := range releases {
-		if releases[i].Less(next) && release.Less(releases[i]) { // grab the most recent release before "next"
-			release = releases[i]
+		switch ut := releases[i].UpgradeType(next); ut {
+		case util.Major, util.Minor:
+			if previousMajorOrMinor.Less(releases[i]) {
+				previousPatch = releases[i]
+			}
+		case util.Patch:
+			if previousPatch.Less(releases[i]) {
+				previousPatch = releases[i]
+			}
+
 		}
+	}
+
+	if (previousMajorOrMinor != util.Release{}) {
+		release = previousMajorOrMinor
+	} else {
+		release = previousPatch // even if this is 0.0.0, this is fine
 	}
 
 	return release, err

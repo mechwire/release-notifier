@@ -76,14 +76,14 @@ func main() {
 
 	gitHubClient := a.gitHub
 
-	prev, err := gitHubClient.GetPreviousRelease(a.gitHubAction.Repository, next)
+	// this should generally work as expected, unless your last major or minor update more 20 releases ago (including the triggered release). Otherwise, it will return the second-most-recent patch release instead.
+	prev, err := gitHubClient.GetPreviousNonPatchRelease(a.gitHubAction.Repository, next)
 	if err != nil {
 		// exit
 		log.Fatalf("issue with github: issue fetching previous release: %v", err)
 	}
 
 	slackClient := a.slack
-
 	comment := fmt.Sprintf("%v - %s performed activity %q", next, a.gitHubAction.Actor, a.gitHubAction.Activity)
 
 	err = slackClient.SendReleaseNotification(a.gitHubAction.ServerURL, a.gitHubAction.Repository, prev, next, comment)
