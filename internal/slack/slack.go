@@ -56,14 +56,12 @@ func (c *Client) SendReleaseNotification(repositoryServerURL string, repository 
 
 	currentParent, err := c.getCurrentParentReleaseNotification(repositoryServerURL, repository, prev, next)
 
-	log.Println("using parent TS", currentParent.TS)
-
 	if err != nil {
 		return err
 	}
 
 	_, err = c.chatPostMessage(text, map[string]interface{}{
-		"thread_ts":    currentParent.TS,
+		`thread_ts`:    currentParent.TS,
 		`unfurl_media`: false,
 		`unfurl_links`: false,
 	})
