@@ -9,7 +9,7 @@ import (
 	"github.com/jncmaguire/release-notifier/internal/util"
 )
 
-type Ingester struct {
+type ingester struct {
 	TagName string `json:"tag_name"`
 }
 
@@ -43,7 +43,7 @@ func (c *Client) getReleases(owner string, repo string, perPage int, page int) (
 		return []util.Release{}, err
 	}
 
-	objects := make([]Ingester, perPage)
+	objects := make([]ingester, perPage)
 
 	if err = json.Unmarshal(data, &objects); err != nil {
 		return []util.Release{}, fmt.Errorf("%w: %v", err, string(data))

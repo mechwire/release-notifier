@@ -67,6 +67,8 @@ func main() {
 		log.Fatalf("issue processing arguments: %v", err)
 	}
 
+	fmt.Printf("%+v", a)
+
 	// lazy cleanup githubRef
 	strippedRef := a.gitHubAction.Ref[len(`refs/heads/`):]
 
