@@ -2,6 +2,7 @@ package slack
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/jncmaguire/release-notifier/internal/util"
 )
@@ -35,7 +36,7 @@ func (c *Client) postSignificantRelease(text string) (message, error) {
 
 func (c *Client) getCurrentParentReleaseNotification(repositoryServerURL string, repository string, prev util.Release, next util.Release) (message, error) {
 
-	text := fmt.Sprintf("<%[1]s|%[2]s> release! :tada:  <%[1]s/releases/tag/%[3]v|%[3]v> :arrow_right: *v%[4]v.%[5]v.x*", repositoryServerURL+repository, repository, prev, next.Major, next.Minor)
+	text := fmt.Sprintf("<%[1]s|%[2]s> release! :tada:  <%[1]s/releases/tag/%[3]v|%[3]v> :arrow_right: *v%[4]v.%[5]v.x*", repositoryServerURL+"/"+repository, repository, prev, next.Major, next.Minor)
 
 	msg, err := c.getNewestSignificantRelease(text)
 
@@ -62,8 +63,12 @@ func (c *Client) SendReleaseNotification(repositoryServerURL string, repository 
 		return err
 	}
 
+	time.Sleep(1 * time.Millisecond)
+
 	_, err = c.chatPostMessage(text, map[string]interface{}{
-		"thread_ts": currentParent.TS,
+		"thread_ts":    currentParent.TS,
+		`unfurl_media`: false,
+		`unfurl_links`: false,
 	})
 
 	return err
