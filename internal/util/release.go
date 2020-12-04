@@ -28,10 +28,14 @@ func (a Release) Less(b Release) bool {
 func (r Release) UpgradeType(upgrade Release) upgradeType {
 	if r.Major < upgrade.Major {
 		return Major
+	} else if r.Major > upgrade.Major {
+		return NoUpgrade
 	}
 
 	if r.Minor < upgrade.Minor {
 		return Minor
+	} else if r.Minor > upgrade.Minor {
+		return NoUpgrade
 	}
 
 	if r.Patch < upgrade.Patch {
